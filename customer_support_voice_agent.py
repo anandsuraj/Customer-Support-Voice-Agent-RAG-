@@ -50,7 +50,7 @@ def init_session_state():
 
 async def sidebar_config():
     with st.sidebar:
-        st.title("🔑 Configuration")
+        st.title("Configuration")
         st.markdown("---")
 
         st.session_state.qdrant_url = st.text_input(
@@ -76,7 +76,7 @@ async def sidebar_config():
         )
 
         st.markdown("---")
-        st.markdown("### 🎤 Voice Settings")
+        st.markdown("### Voice Settings")
         voices = [
             "alloy",
             "ash",
@@ -110,20 +110,20 @@ async def sidebar_config():
                 progress_placeholder = st.empty()
                 with progress_placeholder.container():
                     try:
-                        st.markdown("🔄 Setting up Qdrant connection...")
+                        st.markdown("Setting up Qdrant connection...")
                         client, embedding_model = setup_qdrant_collection(
                             st.session_state.qdrant_url, st.session_state.qdrant_api_key
                         )
                         st.session_state.client = client
                         st.session_state.embedding_model = embedding_model
-                        st.markdown("✅ Qdrant setup complete!")
+                        st.markdown("Qdrant setup complete!")
 
-                        st.markdown("🔄 Crawling documentation pages...")
+                        st.markdown("Crawling documentation pages...")
                         pages = await crawl_documentation(
                             st.session_state.firecrawl_api_key, st.session_state.doc_url
                         )
                         st.markdown(
-                            f"✅ Crawled {len(pages)} documentation pages!")
+                            f"Crawled {len(pages)} documentation pages!")
 
                         store_embeddings(
                             client, embedding_model, pages, "docs_embeddings"
@@ -135,7 +135,7 @@ async def sidebar_config():
                         st.session_state.processor_agent = processor_agent
 
                         st.session_state.setup_complete = True
-                        st.success("✅ System initialized successfully!")
+                        st.success("System initialized successfully!")
 
                     except Exception as e:
                         st.error(f"Error during setup: {str(e)}")
@@ -348,7 +348,7 @@ def run_streamlit():
     init_session_state()
     asyncio.run(sidebar_config())
 
-    st.title("🎙️ Customer Support Voice Agent")
+    st.title(" Customer Support Voice Agent")
     st.markdown(
         """
         **Get quick voice and text answers from any document url**
@@ -370,7 +370,7 @@ def run_streamlit():
         with st.status("Processing your query...", expanded=True) as status:
             try:
                 st.markdown(
-                    "🔄 Searching documentation and generating response...")
+                    "Searching documentation and generating response...")
                 result = asyncio.run(
                     process_query(
                         query,
@@ -383,14 +383,14 @@ def run_streamlit():
                 )
 
                 if result["status"] == "success":
-                    status.update(label="✅ Query processed!", state="complete")
+                    status.update(label="Query processed!", state="complete")
 
                     st.markdown("### Response:")
                     st.write(result["text_response"])
 
                     if "audio_path" in result:
                         st.markdown(
-                            f"### 🔊 Audio Response (Voice: {st.session_state.selected_voice})"
+                            f"### Audio Response (Voice: {st.session_state.selected_voice})"
                         )
                         st.audio(result["audio_path"],
                                  format="audio/mp3", start_time=0)
@@ -398,7 +398,7 @@ def run_streamlit():
                         with open(result["audio_path"], "rb") as audio_file:
                             audio_bytes = audio_file.read()
                             st.download_button(
-                                label="📥 Download Audio Response",
+                                label="Download Audio Response",
                                 data=audio_bytes,
                                 file_name=f"voice_response_{st.session_state.selected_voice}.mp3",
                                 mime="audio/mp3",
@@ -409,16 +409,16 @@ def run_streamlit():
                         st.markdown(f"- {source}")
                 else:
                     status.update(
-                        label="❌ Error processing query", state="error")
+                        label="Error processing query", state="error")
                     st.error(
                         f"Error: {result.get('error', 'Unknown error occurred')}")
 
             except Exception as e:
-                status.update(label="❌ Error processing query", state="error")
+                status.update(label=" Error processing query", state="error")
                 st.error(f"Error processing query: {str(e)}")
 
     elif not st.session_state.setup_complete:
-        st.info("👈 Please configure the system using the sidebar first!")
+        st.info("Please configure the system using the sidebar first!")
 
 
 if __name__ == "__main__":
