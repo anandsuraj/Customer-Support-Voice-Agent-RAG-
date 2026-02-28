@@ -32,7 +32,7 @@ It combines **Firecrawl**, **Qdrant**, **FastEmbed**, and **GPT-4o** with OpenAI
     -   `alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `onyx`, `nova`, `sage`, `shimmer`, `verse`
         
 
-### 🎛️ Streamlit Interface
+### Streamlit Interface
 
 -   Easy sidebar interface for API key and voice setup
     
