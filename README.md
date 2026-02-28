@@ -8,9 +8,9 @@ It combines **Firecrawl**, **Qdrant**, **FastEmbed**, and **GPT-4o** with OpenAI
 
 ----------
 
-## ✨ Key Features
+## Key Features
 
-### 🔍 Intelligent Knowledge Base with RAG
+### Intelligent Knowledge Base with RAG
 
 -   Crawls and parses documentation sites using **Firecrawl**
     
@@ -21,7 +21,7 @@ It combines **Firecrawl**, **Qdrant**, **FastEmbed**, and **GPT-4o** with OpenAI
 -   Uses **Retrieval-Augmented Generation** (RAG) to answer questions based on retrieved chunks from the source
     
 
-### 🧠 AI Agent Workflow
+### AI Agent Workflow
 
 -   **Documentation Processor**: Retrieves relevant information from the given URL and generates contextual answers
     
@@ -47,7 +47,7 @@ It combines **Firecrawl**, **Qdrant**, **FastEmbed**, and **GPT-4o** with OpenAI
 
 ----------
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Clone the Repository
 
@@ -68,11 +68,11 @@ pip install -r requirements.txt
 
 You’ll need API keys from:
 
--   🔑 [OpenAI Platform](https://platform.openai.com/) — for GPT and TTS
+-   [OpenAI Platform](https://platform.openai.com/) — for GPT and TTS
     
--   🔑 [Qdrant Cloud](https://cloud.qdrant.io/) — for vector search
+-   [Qdrant Cloud](https://cloud.qdrant.io/) — for vector search
     
--   🔑 [Firecrawl](https://www.firecrawl.dev/) — for web crawling
+-   [Firecrawl](https://www.firecrawl.dev/) — for web crawling
     
 
 Enter the keys in the Streamlit sidebar.
@@ -86,7 +86,7 @@ streamlit run customer_support_voice_agent.py
 
 ----------
 
-## 🧩 System Architecture (with RAG)
+## System Architecture (with RAG)
 
 ```mermaid
 graph TD
@@ -102,7 +102,7 @@ graph TD
 
 ----------
 
-## 📌 Notes
+##  Notes
 
 -   Crawling depth defaults to 5 pages for performance
     
@@ -113,13 +113,13 @@ graph TD
 
 ----------
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License].
 
 ----------
 
-## 🙌 Acknowledgements
+## Acknowledgements
 
 -   [OpenAI](https://openai.com/) for GPT-4o and TTS
     
