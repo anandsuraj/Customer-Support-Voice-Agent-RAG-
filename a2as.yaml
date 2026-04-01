@@ -1,0 +1,127 @@
+manifest:
+  version: "0.1.2"
+  schema: https://a2as.org/cert/schema
+  subject:
+    name: anandsuraj/customer-support-voice-agent-rag-
+    source: https://github.com/anandsuraj/customer-support-voice-agent-rag-
+    branch: main
+    commit: "fb0a2341"
+    scope: [customer_support_voice_agent.py]
+  issued:
+    by: A2AS.org
+    at: '2026-01-26T16:11:28Z'
+  signatures:
+    digest: sha256:tVd-WO799-vFelikylnznVtQRQUA-iyDym5cVaSyczw
+    key: ed25519:m4ZzhBb5thQWBrCZkr-s9NAxUxHZ788ibsQVnfoEZxM
+    sig: ed25519:GybB0RWheToW3mTHWnYkC-elqkKEbVknl8VE2cMYkmBmMyGCJ29Xvwp2Rx8wWDmORV09tAGYSUYhvV7pVeoUDQ
+
+agents:
+  processor_agent:
+    type: instance
+    models: [gpt-4o]
+    params:
+      function: setup_agents
+      name: Documentation Processor
+      instructions: ['You are a helpful documentation assistant. Your task is to:', 1. Analyze the provided documentation
+          content, 2. Answer the user's question clearly and concisely, 3. Include relevant examples when available, 4. Cite
+          the source URLs when referencing specific content, 5. Keep responses natural and conversational, 6. Format your
+          response in a way that's easy to speak out loud]
+
+models:
+  gpt-4o:
+    type: literal
+    agents: [processor_agent]
+
+imports:
+  Agent: agents.Agent
+  AsyncFirecrawlApp: firecrawl.AsyncFirecrawlApp
+  asyncio: asyncio
+  AsyncOpenAI: openai.AsyncOpenAI
+  datetime: datetime.datetime
+  Dict: typing.Dict
+  Distance: qdrant_client.http.models.Distance
+  FirecrawlApp: firecrawl.FirecrawlApp
+  List: typing.List
+  load_dotenv: dotenv.load_dotenv
+  models: qdrant_client.http.models
+  Optional: typing.Optional
+  os: os
+  Path: pathlib.Path
+  QdrantClient: qdrant_client.QdrantClient
+  Runner: agents.Runner
+  ScrapeOptions: firecrawl.ScrapeOptions
+  st: streamlit
+  tempfile: tempfile
+  TextEmbedding: fastembed.TextEmbedding
+  time: time
+  uuid: uuid
+  VectorParams: qdrant_client.http.models.VectorParams
+
+functions:
+  crawl_documentation:
+    type: async
+    module: customer_support_voice_agent
+    args: [firecrawl_api_key, url, output_dir]
+    params:
+      returns: List[Dict]
+  init_session_state:
+    type: sync
+    module: customer_support_voice_agent
+  process_query:
+    type: async
+    module: customer_support_voice_agent
+    args: [query, client, embedding_model, processor_agent, collection_name, openai_api_key]
+  run_streamlit:
+    type: sync
+    module: customer_support_voice_agent
+  setup_agents:
+    type: sync
+    module: customer_support_voice_agent
+    args: [openai_api_key]
+  setup_qdrant_collection:
+    type: sync
+    module: customer_support_voice_agent
+    args: [qdrant_url, qdrant_api_key, collection_name]
+  sidebar_config:
+    type: async
+    module: customer_support_voice_agent
+  store_embeddings:
+    type: sync
+    module: customer_support_voice_agent
+    args: [client, embedding_model, pages, collection_name]
+
+variables:
+  OPENAI_API_KEY:
+    type: env
+    params:
+      caller: [os.environ]
+
+files:
+  audio_path:
+    type: variable
+    actions: [write]
+    params:
+      caller: [open]
+      alias: [f]
+  filepath:
+    type: variable
+    actions: [write]
+    params:
+      caller: [open]
+      alias: [f]
+  output_dir:
+    type: variable
+    actions: [read]
+    params:
+      caller: [os.path.exists, os.makedirs, os.path.isdir]
+
+networks:
+  docs.example.com:
+    type: api
+    actions: [GET]
+    urls: [/]
+    protocols: [https]
+    ports: ["443"]
+    params:
+      caller: [sidebar_config]
+      links: [placeholder]
